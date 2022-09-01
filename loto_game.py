@@ -40,55 +40,43 @@ class Loto_Gamer:
         return (what in self.card.getcard())
 
 
+# определим игроков:
+gamer_num = int(input('Задайте количество игроков: '))
+gamer_list = []
+
+for n in range(0,gamer_num):
+    gamer = Loto_Gamer()
+    gamer.name = input(f'Имя {n+1}-го игрока: ')
+    answer = input('Ты чловек? y/n: ')
+    gamer.human = (answer == 'y')
+    gamer_list.append(gamer)
+    print(gamer.name, '\n', gamer.card.getcard())
+
+# играем:
 loto_kegs = [i for i in range(1, 91)]   #  номера бочонков от 1 до 90
 random.shuffle(loto_kegs)               # перемешиваем
-
-gamer1 = Loto_Gamer()
-gamer1.name = input('Имя первого игрока: ')
-answer = input('Ты чловек? y/n: ')
-gamer1.human = (answer == 'y')
-
-gamer2 = Loto_Gamer()
-gamer2.name = input('Имя второго игрока: ')
-answer = input('Ты чловек? y/n: ')
-gamer2.human = (answer == 'y')
-
-print(gamer1.name, '\n', gamer1.card.getcard())
-print(gamer2.name, '\n', gamer2.card.getcard())
-
-
+game_over = False
+move_num = 0
 for loto_keg in loto_kegs:
+    move_num +=1
     print(f'Выпал номер ', loto_keg)
-    if gamer1.human:
-        answer = input(gamer1.name+', ты будешь ходить? (y/n): ')
-        if (answer == 'y') == gamer1.can_move(loto_keg):
-            gamer1.card.cross_out(loto_keg)
+    for gamer in gamer_list:
+        if gamer.human:
+            answer = input(gamer.name+', ты будешь ходить? (y/n): ')
+            if (answer == 'y') == gamer.can_move(loto_keg):
+                gamer.card.cross_out(loto_keg)
+            else:
+                print(f'{gamer.name} проиграл! Игра окончена досрочно на {move_num}-м ходу!')
+                game_over = True
+                break
         else:
-            print(gamer1.name,' проиграл! Игра окончена досрочно!')
+            gamer.card.cross_out(loto_keg)
+        if gamer.card.values_in_game == 0:
+            print(f'{gamer.name} выграл! Игра окончена на {move_num}-м ходу!')
+            game_over = True
             break
-    else:
-        gamer1.card.cross_out(loto_keg)
 
-    if gamer2.human:
-        answer = input(gamer2.name + ', ты будешь ходить? (y/n): ')
-        if (answer == 'y') == gamer2.can_move(loto_keg):
-            gamer2.card.cross_out(loto_keg)
         else:
-            print(gamer2.name,' проиграл! Игра окончена досрочно!')
-            break
-    else:
-        gamer2.card.cross_out(loto_keg)
-
-
-    if gamer1.card.values_in_game == 0 and gamer2.card.values_in_game == 0:
-        print('Игра окончена. Ничья!!!')
+            print(gamer.name, '\n', gamer.card.getcard())
+    if game_over:
         break
-    elif gamer1.card.values_in_game == 0:
-        print(gamer1.name,' выграл со счетом ', 15-gamer1.card.values_in_game, ':', 15-gamer2.card.values_in_game)
-        break
-    elif gamer2.card.values_in_game == 0:
-        print(gamer2.name,' выграл со счетом ', 15-gamer2.card.values_in_game, ':', 15-gamer1.card.values_in_game)
-        break
-    else:
-        print(gamer1.name, '\n', gamer1.card.getcard())
-        print(gamer2.name, '\n', gamer2.card.getcard())
