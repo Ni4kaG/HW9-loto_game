@@ -13,7 +13,7 @@ class TestGamer(unittest.TestCase):
         self.assertEqual(self.gamer.name, 'Nika')
         self.assertFalse(self.gamer.human)
         self.assertEqual(self.gamer.card.values_in_game,15)
-#        self.assertIsInstance(self.gamer.card)
+
 
     def test_can_move(self):
         a = 0
@@ -32,6 +32,6 @@ class TestGamer(unittest.TestCase):
 
     def test_gamer(self):
         self.gamer.name = 'Nika'
-        self.gamer.human = False
+        self.gamer.human = True
         self.assertEqual(self.gamer.name, 'Nika')
-        self
+        self.assertTrue(self.gamer.human)
