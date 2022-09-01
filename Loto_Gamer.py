@@ -4,10 +4,10 @@ from Loto_card import Loto_card
 
 
 class Loto_Gamer:
-    def __init__(self):
-        self.human = True  # человек или комп
+    def __init__(self, name, ishuman):
+        self.human = ishuman if type(ishuman) == bool else False   # человек или комп
         self.card = Loto_card() # карточка игрока
-        self.name = ''  # имя игрока
+        self.name = name  # имя игрока
 
     def can_move(self, keg_number):
         """

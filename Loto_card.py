@@ -1,7 +1,10 @@
 import numpy as np
 import random
 
+class NotOnCard(Exception):
 
+    def __str__(self):
+        return 'Номера нет в карточке'
 
 class Loto_card:
     def __init__(self):
@@ -19,6 +22,8 @@ class Loto_card:
         if what in self.card:
            self.card = np.where(self.card != what, self.card, 0)        # обнуляем если есть выпавший номер
            self.values_in_game -= 1 if self.values_in_game > 0 else 0  # уменьшаем число значений в игре
+        else:
+            raise NotOnCard()
 
     def getcard(self):
         return self.card            # почему-то просто обратиться к карточке не получилось без гета

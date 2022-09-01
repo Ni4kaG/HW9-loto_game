@@ -8,13 +8,10 @@ gamer_num = int(input('Задайте количество игроков: '))
 gamer_list = []
 
 for n in range(0,gamer_num):
-    gamer = Loto_Gamer()
-    a = [x >= 0 for x in gamer.card.getcard()]
-    print(a)
-    print(sum(sum(a)))
-    gamer.name = input(f'Имя {n+1}-го игрока: ')
-    answer = input('Ты чловек? y/n: ')
-    gamer.human = (answer == 'y')
+
+    name = input(f'Имя {n+1}-го игрока: ')
+    human = (input('Ты чловек? y/n: ') == 'y')
+    gamer = Loto_Gamer(name, human)
     gamer_list.append(gamer)
     print(gamer.name, '\n', gamer.card.getcard())
 
