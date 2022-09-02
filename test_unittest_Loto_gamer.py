@@ -35,3 +35,23 @@ class TestGamer(unittest.TestCase):
         self.gamer.human = True
         self.assertEqual(self.gamer.name, 'Nika')
         self.assertTrue(self.gamer.human)
+
+    def test__eq__(self):
+        g1 = Loto_Gamer('Nika', True)
+        g2 = Loto_Gamer('Gena', False)
+        g3 = [1, 2, 3]
+        g4 = Loto_Gamer('Gena', True)
+        g4.card = g2.card
+
+        g5 = Loto_Gamer('Nika', False)
+        g5.card = g2.card
+
+        self.assertTrue(g1 == g1)
+        self.assertFalse(g1 == g3)
+        self.assertFalse(g2 == g4)
+        self.assertFalse(g2 == g5)
+        self.assertFalse(g4 == g5)
+
+    def test__str__(self):
+        g1 = Loto_Gamer('Nika', True)
+        self.assertEqual(str(g1),f'Nika (человек): {str(g1.card)}')
