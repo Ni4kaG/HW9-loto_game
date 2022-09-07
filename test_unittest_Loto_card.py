@@ -27,7 +27,6 @@ class TestCard(unittest.TestCase):
                     break
             if not torepeat:
                 break
-
         self.card.cross_out(a)
         self.assertTrue(a in self.thiscard)
         self.assertEqual(self.card.values_in_game, 14)
@@ -35,3 +34,15 @@ class TestCard(unittest.TestCase):
         with self.assertRaises(NotOnCard):
             self.card.cross_out(93)
 
+    def test__eq__(self):
+        c1 = Loto_card()
+        c2 = Loto_card()
+        c2.cross_out(c2.getcard()[1, 5])
+        c3 = [1,2,3]
+        self.assertTrue(c1 == c1)
+        self.assertFalse(c1 == c3)
+        self.assertFalse(c1 == c2)
+
+    def test__str__(self):
+        c1 = Loto_card()
+        self.assertEqual(str(c1), f'Карточка лото 3х9, заполнены {c1.values_in_game} полей:\n{c1.getcard()}')
